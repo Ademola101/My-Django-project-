@@ -1,0 +1,20 @@
+{% extends "boards/Base.html" %}
+{% block title %} Sign up
+{% endblock %}
+{% block breadcrumb %}
+<li class="breadcrumb-item"> <a href="{% url 'home' %}"> Boards</a></li>
+{% endblock %}
+{% block content %}
+<form method="POST"class="form-signin">
+    {% csrf_token %}
+    {{ form.as_p}}
+    <button class="btn btn-success" type="submit">
+    login
+    </button>
+</form>
+<div>
+Don't have account?  <a href="{% url 'sign-up' %}"> <strong>
+        Sign up
+    </strong></a>
+</div>
+{% endblock %}
