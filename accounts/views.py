@@ -18,7 +18,7 @@ def sign_up(request):
             user = form.save()
             username = form.cleaned_data.get("username")
             login (request, user)
-            return redirect("home")
+            return redirect("home")                  
         else:
              form = form_class()
     return render(request, "registration/Sign_up.html",{"form":form})

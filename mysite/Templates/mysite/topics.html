@@ -1,0 +1,4 @@
+{% extends 'mysite/base.html' %}
+{% block title %} {{categorys}} {% endblock %}
+{% block link %}{{categorys}} {% endblock %}
+{% block sidebar %} <div> {% for article in articles %} <div> <a href="{{ article.get_absolute_url }}">{{ article.headline }}</a></div>{% endfor %}</div> {% endblock %}

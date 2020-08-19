@@ -7,13 +7,17 @@ from .Forms import NewTopicForm, SignUpForm,Postform
 from django.contrib.auth.forms import UserCreationForm,AuthenticationForm
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
-from django.views.generic import UpdateView
+from django.views.generic import UpdateView, ListView
 from django.utils import timezone
+from django.utils.decorators import method_decorator
 # Create your views here.
-
-def home(request):
-    boards = Board.objects.all()
-    return render (request, "boards/home.html",{"boards": boards})
+class BoardListView(ListView):
+    model = Board
+    context_object_name =  "boards"
+    template_name = "boards/home.html"
+#def home(request):
+ #   boards = Board.objects.all()
+  #  return render (request, "boards/home.html",{"boards": boards})
 @login_required
 def board_topics(request,pk):
   # boards = Board.objects.get(pk=pk)
@@ -60,6 +64,10 @@ def reply_topic(request, pk, topic_pk):
     else:
         form = Postform()
     return render(request, 'boards/reply_post.html', {'topic': topic, 'form': form})
+def get_queryset(self):
+        queryset = super().get_queryset()
+        return queryset.filter(created_by=self.request.user)
+@method_decorator(login_required, name='dispatch')
 class PostUpdateView(UpdateView):
     model = Post
     fields = ("message",)

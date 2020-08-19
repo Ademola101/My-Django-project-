@@ -1,13 +1,31 @@
-#from django.shortcuts import render
+from django.shortcuts import render
 from django.http import HttpResponse
+from django.shortcuts import render, get_object_or_404,redirect
+from django.views.generic import UpdateView, ListView
+from mysite.models import Category, Article
+from django.contrib.auth.models import User
+from mysite.Forms import Mysite_form
 # Create your views here.
-
-def index(request):
-    return  HttpResponse("This is going to be my site")
-def detail(request,question_id):
-    return HttpResponse("You are looking at the question %s. "% question_id)
-def results(request,question_id):
-    response = " You are lookin at the result of the question %s. "
-    return HttpResponse(response %question_id)
-def vote(request,question_id):
-    return HttpResponse("You are voting on the question %s."%question_id)
+class MysiteListView(ListView):
+    model = Category
+    context_object_name =  "categorys"
+    template_name = "mysite/home.html"
+def mysite_topics(request,pk):
+    article = get_object_or_404(Article, pk=pk)
+    articles = Article.objects.all()
+    return render(request,"mysite/topics.html", {"categorys":categorys,"article":article, "articles":articles})
+def new_post(request,pk):
+    categorys = get_object_or_404(Category,pk=pk)
+    user = User.objects.first()
+    if request.method == "POST":
+        form = Mysite_form(request.Post)
+        if form.is_valid():
+            article = form.save(commit=False)
+            article.categorys = categorys
+            article.published_by = request.user
+            article.save()
+            return redirect("mysite_topics", pk = pk)
+    else:
+        form = Mysite_form()
+    return render(request, "mysite/topic.html",{"categorys":categorys, "form":form})
+    

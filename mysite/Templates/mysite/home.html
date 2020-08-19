@@ -1,0 +1,15 @@
+{% extends 'mysite/base.html' %}
+        {% block dropmenu %}
+        <div> </div>
+        {% endblock %}
+   {% block sidebar %}
+<div></div>
+{% endblock %}
+{% block content %}
+{% for category in categorys %}
+<div class="inner">
+   <a href="{% url 'mysite:mysite_topics' category.pk %}">{{ category.category }}</a> {% endfor %}</div>
+</div> 
+    {% endblock %}
+</body>
+</html>

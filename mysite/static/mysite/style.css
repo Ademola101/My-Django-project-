@@ -1,0 +1,19 @@
+.container{
+    display: grid;
+    grid-template-rows: 200px auto;
+    grid-template-columns: 200px auto;
+    grid-template-areas: 
+    "dropdown header"
+    "sidebar body"
+    ;
+}
+
+ header nav ul li {
+                display: inline-block;padding: 0px 20px 0px 20px;
+                
+             }
+             header nav ul {
+                padding: 20px;
+                text-align: center;background-color:peachpuff;}
+    body{background-color: powderblue; font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif}
+    .inner{font-size: 150%;}
