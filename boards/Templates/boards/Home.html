@@ -1,12 +1,12 @@
 {% extends 'boards/Base.html' %}
 {% block breadcrumb %}
-<li class="breadcrumb-item active" > <a href="{% url 'home'%}">Boards</a> </li>
-{% endblock %}
+<li class="breadcrumb-item active" > <a href="{% url 'boards:home'}">Boards</a></li>
+<li       class="breadcrumb-item active" > Add new subject</li>{% endblock %}
 {% block content%}
 <table class="table">
     <thead class="thead-dark">
         <tr><th scope="col">
-            Board</th>
+            Subject</th>
         
         
             <th scope="col">
@@ -24,7 +24,7 @@
         {% for board in boards %}
 <tr>
     <th scope="row">
-        <a href="{% url 'board_topics' board.pk %}">{{board.name }}</a>
+        <a href="#">{{board.name }}</a>
         <small class="text-muted d-block">{{board.description}}</small>
     </th>
     <td class="align-middle">{{ board.get_posts_count}}</td>
@@ -33,7 +33,7 @@
     </td>
     <td class="align-middle"> {% with post=board.get_last_post %}
         <small>
-          <a href="{% url 'topic_posts' board.pk post.topic.pk %}">
+          <a href="">
             By {{ post.created_by.username }} at {{ post.created_at }}
           </a>
         </small>

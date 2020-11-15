@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.db.models import Count
 from .models import Board, Topic, Post
 from django.contrib.auth.models import User
-from .Forms import NewTopicForm, SignUpForm,Postform
+from .Forms import NewTopicForm, SignUpForm,Postform,NewSubjectform
 from django.contrib.auth.forms import UserCreationForm,AuthenticationForm
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
@@ -11,6 +11,7 @@ from django.views.generic import UpdateView, ListView
 from django.utils import timezone
 from django.utils.decorators import method_decorator
 # Create your views here.
+
 class BoardListView(ListView):
     model = Board
     context_object_name =  "boards"
@@ -19,9 +20,10 @@ class BoardListView(ListView):
  #   boards = Board.objects.all()
   #  return render (request, "boards/home.html",{"boards": boards})
 @login_required
-def board_topics(request,pk):
-  # boards = Board.objects.get(pk=pk)
-   boards = get_object_or_404(Board,pk=pk)
+def board_topics(request,name):
+   boards = Board.objects.get(name=name)
+   #boards = get_object_or_404(Board,name=name)
+   #pk for url matching, to have differnrt board in topics.html2
    topics = boards.topics.order_by('-last_updated').annotate(replies=Count('posts') - 1)
    return render(request, "boards/topics.html",{"boards":boards,"topics":topics}) 
 def new_topic(request,pk):
@@ -81,3 +83,14 @@ class PostUpdateView(UpdateView):
         post.save()
         return redirect('topic_posts', pk=post.topic.boards.pk, topic_pk=post.topic.pk)
         
+def new_subject(request):
+    if request.method == "POST":
+        form = NewSubjectform(request.POST)
+        if form.is_valid():
+            Board.objects.create(
+                name = form.cleaned_data.get("name"),
+                description = form.cleaned_data.get("description"))
+            return redirect("home")
+    else:
+        form = NewSubjectform()
+    return render(request,"boards/new_subject.html",{"form":form})

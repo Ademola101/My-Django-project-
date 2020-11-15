@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [ "accounts",
 "boards",
+"practice.apps.PracticeConfig",
     'mysite.apps.MysiteConfig',
     'django.contrib.admin',
     'django.contrib.auth',

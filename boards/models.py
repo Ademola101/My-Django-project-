@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 from django.contrib.auth.models import User
 from django.utils.text import Truncator
 # Create your models here.
@@ -9,7 +10,6 @@ class Board(models.Model):
         return self.name
     def get_posts_count(self):
         return Post.objects.filter(topic__boards=self).count()
-
     def get_last_post(self):
         return Post.objects.filter(topic__boards=self).order_by('-created_at').first()
 class Topic(models.Model):

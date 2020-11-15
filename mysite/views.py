@@ -11,9 +11,10 @@ class MysiteListView(ListView):
     context_object_name =  "categorys"
     template_name = "mysite/home.html"
 def mysite_topics(request,pk):
-    article = get_object_or_404(Article, pk=pk)
-    articles = Article.objects.all()
-    return render(request,"mysite/topics.html", {"categorys":categorys,"article":article, "articles":articles})
+    #article = get_object_or_404(Article, pk=pk)
+    article = Article.objects.all()
+    categorys = get_object_or_404(Category,pk=pk) 
+    return render(request,"mysite/topics.html", {"categorys":categorys,"article":article})
 def new_post(request,pk):
     categorys = get_object_or_404(Category,pk=pk)
     user = User.objects.first()
