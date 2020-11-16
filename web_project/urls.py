@@ -21,7 +21,7 @@ urlpatterns = [
     include("mysite.urls", namespace="mysite")),
     path('admin/', admin.site.urls),
     path("boards/",
-    include("boards.Urls",namespace="boards")),
+    include("boards.Urls")),
     path("",
     include("accounts.urls")),
     path('accounts/',
