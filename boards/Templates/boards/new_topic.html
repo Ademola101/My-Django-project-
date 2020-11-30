@@ -3,7 +3,7 @@
 {% endblock %}
 {% block breadcrumb %}
 <li class="breadcrumb-item"> <a href="{% url 'home' %}"> Boards</a></li>
-<li class="breadcrumb-item"><a href="{% url 'board_topics' boards.pk %}">
+<li class="breadcrumb-item"><a href="{% url 'board_topics' boards.name %}">
         {{boards.name}}</a>
    </li>
    <li class="breadcrumb-item active">

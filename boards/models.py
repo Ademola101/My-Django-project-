@@ -20,6 +20,8 @@ class Topic(models.Model):
     views = models.PositiveIntegerField(default=0)
     def __str__(self):
         return self.subject
+        class Meta:
+            ordering = ["subject"]
 class Post(models.Model):
     message = models.TextField(max_length=4000)
     topic = models.ForeignKey(Topic,on_delete=models.CASCADE,null=True, related_name="posts")
