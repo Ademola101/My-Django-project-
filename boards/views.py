@@ -43,21 +43,22 @@ def new_topic(request,name):
                message=form.cleaned_data.get('message'),
                 topic=topic,
                 created_by=request.user)
-            return redirect('topic_posts', name=name,topic_name=topic.name)  
+         
+        return redirect('topic_posts', name=name,topic_subject=topic.subject)  
             # TODO: redirect to the created topic page 
     else:
         form = NewTopicForm()
     return render(request, 'boards/new_topic.html', {'boards': boards, 'form': form})
 
-def topic_posts(request,name,topic_name):
-    topic = get_object_or_404(Topic,boards__name=name,name=topic_name) 
+def topic_posts(request,name,subject):
+    topic = get_object_or_404(Topic,boards__name=name, subject = topic_subject) 
     topic.views += 1
     topic.save()
     context = {"topic":topic}
     return render(request,"boards/topic_posts.html",context)
 @login_required
-def reply_topic(request, name, topic_name):
-    topic = get_object_or_404(Topic, boards__name=name, name=topic_name)
+def reply_topic(request, name, topic_pk):
+    topic = get_object_or_404(Topic, boards__name=name, pk=topic_pk)
     if request.method == 'POST':
         form = Postform(request.POST)
         if form.is_valid():
