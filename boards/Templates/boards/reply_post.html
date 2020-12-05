@@ -7,7 +7,7 @@ Post a reply
 {% block breadcrumb %}
   <li class="breadcrumb-item"><a href="{% url 'home' %}">Boards</a></li>
   <li class="breadcrumb-item"><a href="{% url 'board_topics' topic.boards.name %}">{{ topic.boards.name }}</a></li>
-  <li class="breadcrumb-item"><a href="{% url 'topic_posts' topic.boards.name topic.name %}">{{ topic.subject }}</a></li>
+  <li class="breadcrumb-item"><a href="{% url 'topic_posts' topic.boards.name topic.subject %}">{{ topic.subject }}</a></li>
   <li class="breadcrumb-item active">Post a reply</li>
 {% endblock %}
 
