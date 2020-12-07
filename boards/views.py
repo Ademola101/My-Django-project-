@@ -66,7 +66,7 @@ def reply_topic(request, name, topic_subject):
             post.topic = topic
             post.created_by = request.user
             post.save()
-            return redirect('topic_posts', name=name, topic_name=topic_name)
+            return redirect('topic_posts', name=name, topic_subject=topic_subject)
     else:
         form = Postform()
     return render(request, 'boards/reply_post.html', {'topic': topic, 'form': form})
@@ -79,7 +79,7 @@ class PostUpdateView(UpdateView):
     fields = ("message",)
     template_name = "boards/edit_post.html"
     name_url_kwarg = "post_pk"
-    context_object_name = "post"
+    context_object_name = "post" 
     def form_valid(self, form):
         post = form.save(commit=False)
         post.updated_by = self.request.user

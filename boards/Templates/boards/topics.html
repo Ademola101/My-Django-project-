@@ -8,6 +8,10 @@
         <li class="breadcrumb-item active">
             {{boards.name}}
         </li>
+        
+        <li class="breadcrumb-item active">
+          <a href="{% url 'new_topic' boards.name %}">Create New Topic</a>
+        </li>
       {% endblock %}
       {% block content %}
       <table class="table">
