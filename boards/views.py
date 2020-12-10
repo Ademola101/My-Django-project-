@@ -10,6 +10,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.generic import UpdateView, ListView
 from django.utils import timezone
 from django.utils.decorators import method_decorator
+from django.views.generic.edit import FormView
 # Create your views here.
 
 class BoardListView(ListView):
@@ -43,13 +44,21 @@ def new_topic(request,name):
                message=form.cleaned_data.get('message'),
                 topic=topic,
                 created_by=request.user)
-         
+
         return redirect('topic_posts', name=name,topic_subject=topic.subject)  
             # TODO: redirect to the created topic page 
     else:
         form = NewTopicForm()
     return render(request, 'boards/new_topic.html', {'boards': boards, 'form': form})
+#class NewTopicVeiw(FormView):
+ #   template_name = 'boards/new_topic.html'
+  #  form_class = NewTopicForm
+   # success_url = "/thanks/"
+    #def form_valid(self,form):
+     #   pass
 
+
+         
 def topic_posts(request,name,topic_subject):
     topic = get_object_or_404(Topic,boards__name=name, subject= topic_subject) 
     topic.views += 1
@@ -76,10 +85,11 @@ def get_queryset(self):
 @method_decorator(login_required, name='dispatch')
 class PostUpdateView(UpdateView):
     model = Post
-    fields = ("message",)
+    fields = ["message"]
     template_name = "boards/edit_post.html"
-    name_url_kwarg = "post_pk"
+    pk_url_kwarg = "post_pk"
     context_object_name = "post" 
+    success_url = "/thanks/"
     def form_valid(self, form):
         post = form.save(commit=False)
         post.updated_by = self.request.user
