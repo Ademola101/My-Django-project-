@@ -25,4 +25,9 @@ class Article(models.Model):
     updated = models.DateTimeField(auto_now=True)
     def __str__(self):
         return self.headline
-   
+class Question(models.Model):
+    option_choices = (("A","blue"),("B","green"),("C","white"))
+    question_field = models.CharField(max_length = 70)
+    option = models.CharField(max_length=1,choices = option_choices)
+    def __str__(self):
+        return self.question_field

@@ -4,7 +4,7 @@ from django.shortcuts import render, get_object_or_404,redirect
 from django.views.generic import UpdateView, ListView
 from mysite.models import Category, Article
 from django.contrib.auth.models import User
-from mysite.Forms import Mysite_form
+from mysite.Forms import Mysite_form, Question_form
 # Create your views here.
 class MysiteListView(ListView):
     model = Category
@@ -14,12 +14,20 @@ def mysite_topics(request,pk):
     #article = get_object_or_404(Article, pk=pk)
     article = Article.objects.all()
     categorys = get_object_or_404(Category,pk=pk) 
-    return render(request,"mysite/topics.html", {"categorys":categorys,"article":article})
+    if request.method == "POST":
+        form = Question_form(request.POST)
+        if form.is_valid():
+            question = form.save()
+            question.save()
+            return redirect("mysite_home")
+    else:
+        form = Mysite_form()
+    return render(request,"mysite/topics.html", {"categorys":categorys,"article":article,"form":form})
 def new_post(request,pk):
     categorys = get_object_or_404(Category,pk=pk)
     user = User.objects.first()
     if request.method == "POST":
-        form = Mysite_form(request.Post)
+        form = Mysite_form(request.POST)
         if form.is_valid():
             article = form.save(commit=False)
             article.categorys = categorys
@@ -29,4 +37,3 @@ def new_post(request,pk):
     else:
         form = Mysite_form()
     return render(request, "mysite/topic.html",{"categorys":categorys, "form":form})
-    

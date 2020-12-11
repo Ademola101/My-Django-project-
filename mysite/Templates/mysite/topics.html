@@ -2,4 +2,11 @@
 {% block title %} {{categorys}} {% endblock %}
 {% block link %} {% endblock %}
 {% block sidebar %} <aside>  <a href="{% url 'mysite:mysite_topics' categorys.pk %}">hh</a> </aside> 
-{% endblock %}  {% block content %}{% for articles in article %}  <span class="show-read-more">{{ articles.body }}</span>{% endfor %} {% endblock %}
+{% endblock %}  {% block content %}{% for articles in article %}  <span class="show-read-more">{{ articles.body }}
+
+</span>{% endfor %}
+<form method = "POST">
+    {% csrf_token %}
+    {{form.as_p}}
+    <button class="btn btn-sucess" type="submit"> Submit</button>
+</form> {% endblock %}
