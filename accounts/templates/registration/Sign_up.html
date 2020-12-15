@@ -5,9 +5,9 @@
 <li class="breadcrumb-item"> <a href="{% url 'home' %}"> Boards</a></li>
 {% endblock %}
 {% block content %}
-<form method="POST" novalidate class="form-signin">
+<form method="POST" class="form-signin">
     {% csrf_token %}
-    {{ form.as_p}}
+    {% include 'includes/form.html' %}
     <button class="btn btn-success" type="submit">
         Sign up
     </button>
