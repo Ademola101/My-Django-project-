@@ -31,4 +31,4 @@ class Post(models.Model):
     updated_by = models.ForeignKey(User,on_delete=models.CASCADE,null=True,related_name = "+")   
     def __str__(self):
         truncated_message = Truncator(self.message)
-        return truncated_message.chars(30)
+        return truncated_message.chars(30) 
