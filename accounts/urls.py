@@ -4,7 +4,8 @@ from accounts import views as accounts_views
 from  django.contrib import admin
 from django.contrib.auth import views
 urlpatterns =[
+  path("accounts/",accounts_views.UserUpdateView.as_view(),name="account"),
     path("accounts/sign_up/",
   accounts_views.sign_up, 
-    name = "sign-up"),
+    name = "sign-up")
 ]

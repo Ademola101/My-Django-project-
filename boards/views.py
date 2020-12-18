@@ -108,3 +108,5 @@ def new_subject(request):
     else:
         form = NewSubjectform()
     return render(request,"boards/new_subject.html",{"form":form})
+
+    
